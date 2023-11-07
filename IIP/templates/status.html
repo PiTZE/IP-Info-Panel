@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Status</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Dark theme */
+        body {
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #212529;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #444;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #333;
+        }
+
+        td {
+            color: #fff;
+        }
+
+        /* Styling for Previous IP and Current IP cells */
+        td:nth-child(2) {
+            /* Selecting the second column for Previous IP */
+            background-color: #ff1744;
+            /* Light red background */
+            text-decoration: line-through;
+            /* Strike-through text */
+            color: #000;
+            /* Black text color */
+        }
+
+        td:nth-child(3) {
+            /* Selecting the third column for Current IP */
+            background-color: #00e676;
+            /* Light green background */
+            color: #000;
+            /* Black text color */
+        }
+
+        /* Remove emojis */
+        td:nth-child(2)::after,
+        td:nth-child(3)::after {
+            content: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-bordered table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Previous IP</th>
+                            <th scope="col">Current IP</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for server in servers %}
+                        <tr>
+                            <td>{{ server.name|default:"No Name" }}</td>
+                            <td>
+                                {% if server.previous_ip %}
+                                {{ server.previous_ip }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if server.current_ip %}
+                                {{ server.current_ip }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if server.status %}
+                                &#128994; <!-- Green circle emoji -->
+                                {% else %}
+                                &#128308; <!-- Red circle emoji -->
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
